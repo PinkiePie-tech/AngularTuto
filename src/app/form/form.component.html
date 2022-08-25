@@ -41,6 +41,4 @@
   <span class="error" *ngIf="formGroup.get('lead').errors?.wrongLead">
     {{ formGroup.get('lead').errors?.wrongLead }}
   </span>
-
-  {{ formGroup.getRawValue() | json }}
 </form>

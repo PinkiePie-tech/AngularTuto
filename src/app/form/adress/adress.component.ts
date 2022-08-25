@@ -84,9 +84,7 @@ export class AdressComponent
     });
 
     this.subscription.add(
-      this.formGroup.valueChanges
-        .pipe(debounceTime(500))
-        .subscribe((value) => (this.value = value))
+      this.formGroup.valueChanges.subscribe((value) => (this.value = value))
     );
   }
 
