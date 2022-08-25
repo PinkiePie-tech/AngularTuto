@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { AdressComponent } from './form/adress/adress.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, BrowserModule, FormsModule, ReactiveFormsModule],
   declarations: [AppComponent, FormComponent, AdressComponent],
   bootstrap: [AppComponent],
 })

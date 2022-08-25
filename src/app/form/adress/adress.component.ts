@@ -4,6 +4,7 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  OnDestroy,
   Output,
 } from '@angular/core';
 import {
@@ -15,7 +16,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'sip-adress',
@@ -37,7 +38,7 @@ import { Subject } from 'rxjs';
   ],
 })
 export class AdressComponent
-  implements ControlValueAccessor, Validators, AfterContentInit
+  implements ControlValueAccessor, Validators, AfterContentInit, OnDestroy
 {
   @Output() blur = new EventEmitter<void>();
   @Output() focus = new EventEmitter<void>();
@@ -51,6 +52,7 @@ export class AdressComponent
   public stateChanges = new Subject<void>();
   private _value: any;
   private touched = false;
+  private subscription = new Subscription();
 
   constructor() {
     this.stateChanges.subscribe(() => console.log('Subject', this.value));
@@ -72,9 +74,18 @@ export class AdressComponent
   public onTouch: any = () => {};
 
   ngAfterContentInit() {
-    this.formGroup.setValue(this.value);
+    this.formGroup.setValue({
+      ...this.formGroup.getRawValue(),
+      ...this.value,
+    });
 
-    this.formGroup.valueChanges.subscribe((value) => (this.value = value));
+    this.subscription.add(
+      this.formGroup.valueChanges.subscribe((value) => (this.value = value))
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   registerOnChange(fn: any): void {

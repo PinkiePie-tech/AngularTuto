@@ -17,11 +17,7 @@ export class FormComponent {
     {
       firstname: new FormControl('Seb', Validators.required),
       name: new FormControl('Pupu', Validators.required),
-      adress: new FormControl({
-        city: 'Vauvillers',
-        code: '70210',
-        street: 'rue',
-      }),
+      adress: new FormControl(),
       phone: new FormGroup(
         {
           prefix: new FormControl(undefined, [
