@@ -41,9 +41,9 @@ export class FormComponent {
   );
 
   constructor() {
-    this.formGroup.valueChanges.subscribe((value) =>
-      console.log("C'est moi le daron", value)
-    );
+    this.formGroup.valueChanges
+      .pipe(map((value) => value.adress))
+      .subscribe((value) => console.log("C'est moi le daron", value));
   }
 
   private LeadValidators(control: AbstractControl): ValidationErrors {
