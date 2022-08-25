@@ -41,4 +41,7 @@
   <span class="error" *ngIf="formGroup.get('lead').errors?.wrongLead">
     {{ formGroup.get('lead').errors?.wrongLead }}
   </span>
+  <button (click)="resetForm()">resetForm</button>
+
+  <button (click)="importForm()">importForm</button>
 </form>

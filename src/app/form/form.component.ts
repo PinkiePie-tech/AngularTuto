@@ -40,10 +40,27 @@ export class FormComponent {
     this.GroupValidators
   );
 
-  constructor() {
-    this.formGroup.valueChanges
-      .pipe(map((value) => value.adress))
-      .subscribe((value) => console.log("C'est moi le daron", value));
+  constructor() {}
+
+  public resetForm() {
+    this.formGroup.reset();
+  }
+
+  public importForm() {
+    this.formGroup.setValue({
+      firstname: 'Marius',
+      name: 'Du Canal+',
+      adress: {
+        city: 'Paris',
+        code: '75115',
+        street: 'Basbalouède',
+      },
+      phone: {
+        prefix: '+33',
+        number: '0607080910',
+      },
+      lead: 'Marius',
+    });
   }
 
   private LeadValidators(control: AbstractControl): ValidationErrors {

@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   Component,
   EventEmitter,
   forwardRef,
@@ -16,13 +15,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  distinctUntilChanged,
-  Subject,
-  Subscription,
-  debounceTime,
-  tap,
-} from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'sip-adress',
@@ -44,7 +37,7 @@ import {
   ],
 })
 export class AdressComponent
-  implements ControlValueAccessor, Validators, AfterContentInit, OnDestroy
+  implements ControlValueAccessor, Validators, OnDestroy
 {
   @Output() blur = new EventEmitter<void>();
   @Output() focus = new EventEmitter<void>();
@@ -60,33 +53,38 @@ export class AdressComponent
   private touched = false;
   private subscription = new Subscription();
 
-  constructor() {}
+  constructor() {
+    this.subscription.add(
+      this.formGroup.valueChanges.subscribe((value) => (this.value = value))
+    );
+
+    this.subscription.add(
+      this.stateChanges.subscribe(() => {
+        this.formGroup.setValue({
+          city: this.value?.city ?? null,
+          code: this.value?.code ?? null,
+          street: this.value?.street ?? null,
+        });
+      })
+    );
+  }
 
   @Input()
   get value(): any | undefined {
     return this._value;
   }
   set value(value: any | undefined) {
-    this._value = value;
-    this.stateChanges.next();
-    if (value) {
-      this.markAsTouched();
+    if (JSON.stringify(value) !== JSON.stringify(this.value)) {
+      this._value = value;
+      if (value) {
+        this.markAsTouched();
+      }
+      this.stateChanges.next();
+      this.onChange(this.value);
     }
-    this.onChange(this.value);
   }
   public onChange: any = () => {};
   public onTouch: any = () => {};
-
-  ngAfterContentInit() {
-    this.formGroup.setValue({
-      ...this.formGroup.getRawValue(),
-      ...this.value,
-    });
-
-    this.subscription.add(
-      this.formGroup.valueChanges.subscribe((value) => (this.value = value))
-    );
-  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
