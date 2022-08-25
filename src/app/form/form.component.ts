@@ -17,14 +17,11 @@ export class FormComponent {
     {
       firstname: new FormControl('Seb', Validators.required),
       name: new FormControl('Pupu', Validators.required),
-      adress: new FormGroup(
-        {
-          city: new FormControl('Vauvillers', Validators.required),
-          code: new FormControl('70210', Validators.required),
-          street: new FormControl('prout', Validators.required),
-        },
-        this.GroupValidators
-      ),
+      adress: new FormControl({
+        city: 'Vauvillers',
+        code: '70210',
+        street: 'rue',
+      }),
       phone: new FormGroup(
         {
           prefix: new FormControl(undefined, [
@@ -45,6 +42,12 @@ export class FormComponent {
     },
     this.GroupValidators
   );
+
+  constructor() {
+    this.formGroup.valueChanges.subscribe((value) =>
+      console.log("C'est moi le daron", value)
+    );
+  }
 
   private LeadValidators(control: AbstractControl): ValidationErrors {
     if (control?.value?.toLowerCase().search('jean')) {

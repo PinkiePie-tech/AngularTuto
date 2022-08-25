@@ -52,7 +52,9 @@ export class AdressComponent
   private _value: any;
   private touched = false;
 
-  constructor() {}
+  constructor() {
+    this.stateChanges.subscribe(() => console.log('Subject', this.value));
+  }
 
   @Input()
   get value(): any | undefined {
@@ -64,13 +66,15 @@ export class AdressComponent
     if (value) {
       this.markAsTouched();
     }
-    this.onChange(this.value);
+    this.onChange();
   }
   public onChange: any = () => {};
   public onTouch: any = () => {};
 
   ngAfterContentInit() {
-    console.log(this.value);
+    this.formGroup.setValue(this.value);
+
+    this.formGroup.valueChanges.subscribe((value) => (this.value = value));
   }
 
   registerOnChange(fn: any): void {

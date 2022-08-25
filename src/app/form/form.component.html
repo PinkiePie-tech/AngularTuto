@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" class="incolumn">
   <input formControlName="firstname" placeholder="Nom" />
   <input formControlName="name" placeholder="Prénom" />
-  <sip-adress></sip-adress>
+  <sip-adress formControlName="adress"></sip-adress>
   <div formGroupName="phone" class="inline">
     <input formControlName="prefix" placeholder="+33" />
     <input formControlName="number" placeholder="Téléphone" />
