@@ -16,7 +16,13 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Subject, Subscription } from 'rxjs';
+import {
+  distinctUntilChanged,
+  Subject,
+  Subscription,
+  debounceTime,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'sip-adress',
@@ -54,9 +60,7 @@ export class AdressComponent
   private touched = false;
   private subscription = new Subscription();
 
-  constructor() {
-    this.stateChanges.subscribe(() => console.log('Subject', this.value));
-  }
+  constructor() {}
 
   @Input()
   get value(): any | undefined {
@@ -68,7 +72,7 @@ export class AdressComponent
     if (value) {
       this.markAsTouched();
     }
-    this.onChange();
+    this.onChange(this.value);
   }
   public onChange: any = () => {};
   public onTouch: any = () => {};
@@ -80,7 +84,9 @@ export class AdressComponent
     });
 
     this.subscription.add(
-      this.formGroup.valueChanges.subscribe((value) => (this.value = value))
+      this.formGroup.valueChanges
+        .pipe(debounceTime(500))
+        .subscribe((value) => (this.value = value))
     );
   }
 
