@@ -15,13 +15,13 @@ import {
 export class FormComponent {
   public formGroup = new FormGroup(
     {
-      firstname: new FormControl(undefined, Validators.required),
-      name: new FormControl(undefined, Validators.required),
+      firstname: new FormControl('Seb', Validators.required),
+      name: new FormControl('Pupu', Validators.required),
       adress: new FormGroup(
         {
-          city: new FormControl(undefined, Validators.required),
-          code: new FormControl(undefined, Validators.required),
-          street: new FormControl(undefined, Validators.required),
+          city: new FormControl('Vauvillers', Validators.required),
+          code: new FormControl('70210', Validators.required),
+          street: new FormControl('prout', Validators.required),
         },
         this.GroupValidators
       ),

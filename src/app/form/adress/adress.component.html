@@ -1,0 +1,10 @@
+<ng-container [formGroup]="formGroup">
+  <input formControlName="street" placeholder="Adresse" />
+  <div class="inline">
+    <input formControlName="code" placeholder="Code postal" />
+    <input formControlName="city" placeholder="Ville" />
+  </div>
+  <span class="error" *ngIf="formGroup.get('adress').errors?.required">
+    Une adresse complète est requise
+  </span>
+</ng-container>

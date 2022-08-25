@@ -1,16 +1,7 @@
 <form [formGroup]="formGroup" class="incolumn">
   <input formControlName="firstname" placeholder="Nom" />
   <input formControlName="name" placeholder="Prénom" />
-  <ng-container formGroupName="adress">
-    <input formControlName="street" placeholder="Adresse" />
-    <div class="inline">
-      <input formControlName="code" placeholder="Code postal" />
-      <input formControlName="city" placeholder="Ville" />
-    </div>
-    <span class="error" *ngIf="formGroup.get('adress').errors?.required">
-      Une adresse complète est requise
-    </span>
-  </ng-container>
+  <sip-adress></sip-adress>
   <div formGroupName="phone" class="inline">
     <input formControlName="prefix" placeholder="+33" />
     <input formControlName="number" placeholder="Téléphone" />

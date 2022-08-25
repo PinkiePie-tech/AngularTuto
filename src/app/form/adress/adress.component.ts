@@ -15,36 +15,28 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { any, ITriggerPreset } from 'src/app/shared/models/trigger.model';
-import { TriggerService } from 'src/app/shared/services/trigger.service';
-import {
-  IGroupSelectOption,
-  ISelectOption,
-} from 'src/app/shared/models/common.model';
-import { CommonService } from 'src/app/shared/services/common.service';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'sip-trigger-common',
-  templateUrl: './trigger-common.component.html',
-  styleUrls: ['./trigger-common.component.scss'],
+  selector: 'sip-adress',
+  templateUrl: './adress.component.html',
+  styleUrls: ['./adress.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      useExisting: forwardRef(() => TriggerCommonComponent),
+      useExisting: forwardRef(() => AdressComponent),
       multi: true,
     },
     {
       provide: NG_VALIDATORS,
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      useExisting: TriggerCommonComponent,
+      useExisting: AdressComponent,
       multi: true,
     },
   ],
 })
-export class TriggerCommonComponent
+export class AdressComponent
   implements ControlValueAccessor, Validators, AfterContentInit
 {
   @Output() blur = new EventEmitter<void>();
