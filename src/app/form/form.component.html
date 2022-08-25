@@ -1,0 +1,53 @@
+<form [formGroup]="formGroup" class="incolumn">
+  <input formControlName="firstname" placeholder="Nom" />
+  <input formControlName="name" placeholder="Prénom" />
+  <ng-container formGroupName="adress">
+    <input formControlName="street" placeholder="Adresse" />
+    <div class="inline">
+      <input formControlName="code" placeholder="Code postal" />
+      <input formControlName="city" placeholder="Ville" />
+    </div>
+    <span class="error" *ngIf="formGroup.get('adress').errors?.required">
+      Une adresse complète est requise
+    </span>
+  </ng-container>
+  <div formGroupName="phone" class="inline">
+    <input formControlName="prefix" placeholder="+33" />
+    <input formControlName="number" placeholder="Téléphone" />
+  </div>
+  <span
+    class="error"
+    *ngIf="formGroup.get('phone').get('prefix').errors?.maxlength; else error2"
+  >
+    L'indicateur ne doit pas dépasser
+    {{ formGroup.get('phone').get('prefix').errors?.maxlength.requiredLength }}
+    caractères
+  </span>
+  <ng-template #error2>
+    <span
+      class="error"
+      *ngIf="
+        formGroup.get('phone').get('number').errors?.maxlength;
+        else error3
+      "
+    >
+      Le numéro de téléphone ne doit pas dépasser
+      {{
+        formGroup.get('phone').get('number').errors?.maxlength.requiredLength
+      }}
+      caractères
+    </span>
+  </ng-template>
+  <ng-template #error3>
+    <span class="error" *ngIf="formGroup.get('phone').errors?.required">
+      le numéro de téléphone est requis
+    </span>
+  </ng-template>
+  <input
+    formControlName="lead"
+    placeholder="Qui que c'est votre lead dev front adoré ?"
+  />
+  <span class="error" *ngIf="formGroup.get('lead').errors?.wrongLead">
+    {{ formGroup.get('lead').errors?.wrongLead }}
+  </span>
+</form>
